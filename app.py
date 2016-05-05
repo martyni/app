@@ -8,9 +8,9 @@ def index():
     return 'Hello World!'
 
 
-@app.route('/data')
+@app.route('/stuff')
 def names():
-    data = {"names": ["John", "Jacob", "Julie", "Jennifer"]}
+    data = {"favourites": {"films":["LOTR", "Space Jam", "Star Wars", "Krull"]}}
     return jsonify(data)
 
 
