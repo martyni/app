@@ -1,18 +1,18 @@
-from flask import Flask, jsonify
-
+from flask import Flask
+import os
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    return 'Hello World!'
+   return os.uname()[1]
 
+@app.route('/info')
+def info():
+   return str(os.uname())
 
-@app.route('/stuff')
-def names():
-    data = {"favourites": {"films":["LOTR", "Space Jam", "Star Wars", "Krull"]}}
-    return jsonify(data)
 
 
 if __name__ == '__main__':
-    app.run()
+   
+   app.run(host='0.0.0.0')
