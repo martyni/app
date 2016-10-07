@@ -1,8 +1,7 @@
-from python
+FROM python
 
-copy app.py /app.py
-copy requirements.txt /requirements.txt
-
-run pip install -r /requirements.txt
-expose 5000
-cmd python /app.py
+EXPOSE 8000
+WORKDIR /app
+CMD gunicorn --bind 0.0.0.0:8000 wsgi
+COPY app /app
+RUN pip install -r /app/requirements.txt
