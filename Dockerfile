@@ -2,6 +2,8 @@ FROM python
 
 EXPOSE 8000
 WORKDIR /app
-CMD gunicorn --bind 0.0.0.0:8000 wsgi
+copy requirements.txt /requirements.txt
+RUN pip install -r /requirements.txt
+#CMD gunicorn --bind 0.0.0.0:8000 wsgi
+CMD python app.py 
 COPY app /app
-RUN pip install -r /app/requirements.txt
