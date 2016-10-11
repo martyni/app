@@ -4,7 +4,7 @@ upstream api_upstream{
 
 
 server {
-   listen 80;
+   listen 80 proxy_protocol;
    server_name _p;
    location / {
       proxy_pass http://api_upstream;
