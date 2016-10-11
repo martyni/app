@@ -4,6 +4,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
 from time import sleep
+from werkzeug.contrib.fixers import ProxyFix
 
 # Use a Class-based config to avoid needing a 2nd file
 # os.getenv() enables configuration through OS environment variables
@@ -31,6 +32,7 @@ def create_application():
     
     # Setup Flask app and app.config
     application = Flask(__name__)
+    application.wsgi_app = ProxyFix(application.wsgi_app)
     application.config.from_object(__name__+'.ConfigClass')
     # Initialize Flask extensions
     db = SQLAlchemy(application)                            # Initialize Flask-SQLAlchemy
@@ -96,4 +98,4 @@ def create_application():
 # Start development web server
 application = create_application()
 if __name__=='__main__':
-    application.run(host='0.0.0.0', port=8000, debug=True)
+    application.run(host='0.0.0.0', port=5000, debug=True)
