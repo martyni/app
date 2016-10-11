@@ -1,0 +1,12 @@
+upstream api_upstream{
+   server app:8000;
+}
+
+
+server {
+   listen 80;
+   server_name _p;
+   location / {
+      proxy_pass $http_x_forwarded_proto://api_upstream;
+      proxy_set_header Host $SITE;
+   }

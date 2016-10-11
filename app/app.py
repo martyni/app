@@ -35,7 +35,9 @@ def create_application():
     # Initialize Flask extensions
     db = SQLAlchemy(application)                            # Initialize Flask-SQLAlchemy
     mail = Mail(application)                                # Initialize Flask-Mail
-
+    application.config.update(dict(
+      PREFERRED_URL_SCHEME = os.getenv('PREFERRED_URL_SCHEME', 'https')
+    ))
     # Define the User data model. Make sure to add flask.ext.user UserMixin !!!
     class User(db.Model, UserMixin):
         id = db.Column(db.Integer, primary_key=True)
