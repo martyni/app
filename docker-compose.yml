@@ -1,0 +1,22 @@
+---
+
+version: '2'
+services:
+  app:
+    build: .
+    environment:
+       - AWS_DEFAULT_PROFILE
+       - MAIL_USERNAME
+       - MAIL_PASSWORD
+       - MAIL_DEFAULT_SENDER
+       - MAIL_SERVER
+       - MAIL_PORT
+       - MAIL_USE_SSL
+  nginx:
+    build: nginx/
+    ports: 
+    - "8000:80"
+    links:
+    - "app"
+    environment:
+       - "SITE=localhost:8000"
