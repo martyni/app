@@ -14,6 +14,8 @@ services:
        - MYSQL_USER
        - MYSQL_DATABASE
        - MYSQL_PASSWORD
+   links:
+       - "mysql"
   nginx:
     build: nginx/
     ports: 
