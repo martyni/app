@@ -11,18 +11,16 @@ from werkzeug.contrib.fixers import ProxyFix
 class ConfigClass(object):
     # Flask settings
     SECRET_KEY =              os.getenv('SECRET_KEY',       'THIS IS AN INSECURE SECRET')
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',     'sqlite:///basic_app.sqlite')
-
     db_uri = ['MYSQL_DATABASE', 'MYSQL_USER', 'MYSQL_PASSWORD']
     for var in db_uri:
        if not os.getenv(var):
-          SQLHLCHEHY_DATABASE_URI = 'sqlite:///basic_app.sqlite' 
+          SQLALCHEMY_DATABASE_URI = 'sqlite:///basic_app.sqlite'
           break
        else:
-          db = os.getenv('MYSQL_DATABASE')
-          user = os.getenv('MYSQL_USER')
-          passwd = os.getenv('MYSQL_PASSWORD')
-          SQLALCHEMY_DATABASE_URI = 'mgsql://{user}:{passwd}/{db}'.format(
+          _db = os.getenv('MYSQL_DATABASE')
+          _user = os.getenv('MYSQL_USER')
+          _passwd = os.getenv('MYSQL_PASSWORD')
+          SQLALCHEMY_DATABASE_URI = 'mysql://{user}:{passwd}/{db}'.format(
              db=_db,
              user=_user,
              passwd=_passwd
