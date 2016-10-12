@@ -11,11 +11,21 @@ services:
        - MAIL_SERVER
        - MAIL_PORT
        - MAIL_USE_SSL
+       - MYSQL_USER
+       - MYSQL_DATABASE
+       - MYSQL_PASSWORD
   nginx:
     build: nginx/
     ports: 
-    - "8000:80"
+       - "8000:80"
     links:
-    - "app"
+       - "app"
     environment:
        - "SITE=localhost:8000"
+  mysql:
+    image: mysql
+    environment:
+       - MYSQL_ROOT_PASSWORD
+       - MYSQL_DATABASE
+       - MYSQL_PASSWORD
+       - MYSQL_USER
