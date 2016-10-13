@@ -13,19 +13,19 @@ class ConfigClass(object):
     SECRET_KEY =              os.getenv('SECRET_KEY',       'THIS IS AN INSECURE SECRET')
     db_uri = ['MYSQL_DATABASE', 'MYSQL_USER', 'MYSQL_PASSWORD']
     for var in db_uri:
-       if not os.getenv(var):
+       if not os.getenv(var) or os.getenv('LOCAL'):
           SQLALCHEMY_DATABASE_URI = 'sqlite:///basic_app.sqlite'
           break
        else:
           _db = os.getenv('MYSQL_DATABASE')
           _user = os.getenv('MYSQL_USER')
           _passwd = os.getenv('MYSQL_PASSWORD')
-          SQLALCHEMY_DATABASE_URI = 'mysql://{user}:{passwd}/{db}'.format(
+          SQLALCHEMY_DATABASE_URI = 'mysql://{user}:{passwd}@mysql/{db}'.format(
              db=_db,
              user=_user,
              passwd=_passwd
           )
-
+    print 
     # Flask-Mail settings
     
     MAIL_USERNAME =           os.getenv('MAIL_USERNAME'       )
