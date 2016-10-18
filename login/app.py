@@ -1,4 +1,5 @@
 import os
+import tempfile
 from flask import Flask, render_template_string
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
@@ -14,7 +15,9 @@ class ConfigClass(object):
     db_uri = ['MYSQL_DATABASE', 'MYSQL_USER', 'MYSQL_PASSWORD']
     for var in db_uri:
        if not os.getenv(var) or os.getenv('LOCAL'):
-          SQLALCHEMY_DATABASE_URI = 'sqlite:///basic_app.sqlite'
+          tmp_file = tempfile.mkstemp()
+          print tmp_file
+          SQLALCHEMY_DATABASE_URI = 'sqlite:///' + tmp_file[1]
           break
        else:
           _db = os.getenv('MYSQL_DATABASE')
