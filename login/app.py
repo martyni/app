@@ -25,7 +25,6 @@ class ConfigClass(object):
              user=_user,
              passwd=_passwd
           )
-    print 
     # Flask-Mail settings
     
     MAIL_USERNAME =           os.getenv('MAIL_USERNAME'       )
