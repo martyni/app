@@ -39,17 +39,17 @@ class ConfigClass(object):
     USER_APP_NAME        = "AppName"                # Used by email templates
 
 
-def create_application():
-    """ Flask application factory """
+def create_app():
+    """ Flask app factory """
     
     # Setup Flask app and app.config
-    application = Flask(__name__)
-    application.wsgi_app = ProxyFix(application.wsgi_app)
-    application.config.from_object(__name__+'.ConfigClass')
+    app = Flask(__name__)
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+    app.config.from_object(__name__+'.ConfigClass')
     # Initialize Flask extensions
-    db = SQLAlchemy(application)                            # Initialize Flask-SQLAlchemy
-    mail = Mail(application)                                # Initialize Flask-Mail
-    application.config.update(dict(
+    db = SQLAlchemy(app)                            # Initialize Flask-SQLAlchemy
+    mail = Mail(app)                                # Initialize Flask-Mail
+    app.config.update(dict(
       PREFERRED_URL_SCHEME = os.getenv('PREFERRED_URL_SCHEME', 'https')
     ))
     # Define the User data model. Make sure to add flask.ext.user UserMixin !!!
@@ -75,10 +75,10 @@ def create_application():
 
     # Setup Flask-User
     db_adapter = SQLAlchemyAdapter(db, User)        # Register the User model
-    user_manager = UserManager(db_adapter, application)     # Initialize Flask-User
+    user_manager = UserManager(db_adapter, app)     # Initialize Flask-User
 
     # The Home page is accessible to anyone
-    @application.route('/')
+    @app.route('/')
     def home_page():
         return render_template_string("""
             {% extends "base.html" %}
@@ -91,7 +91,7 @@ def create_application():
             """)
 
     # The Members page is only accessible to authenticated users
-    @application.route('/members')
+    @app.route('/members')
     @login_required                                 # Use of @login_required decorator
     def members_page():
         return render_template_string("""
@@ -104,10 +104,10 @@ def create_application():
             {% endblock %}
             """)
 
-    return application
+    return app
 
 
 # Start development web server
-application = create_application()
+App = create_app()
 if __name__=='__main__':
-    application.run(host='0.0.0.0', port=8000, debug=True)
+    App.run(host='0.0.0.0', port=8000, debug=True)
